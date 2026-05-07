@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 
 // When running on an Android emulator, 10.0.2.2 maps to the host's localhost.
 // When running on a physical device, you need to use your PC's actual local IP address.
-const API_BASE_URL = Platform.OS === 'android' ? 'http://10.0.2.2:8000/api' : 'http://localhost:8000/api';
+const API_BASE_URL = Platform.OS === 'android' ? 'http://10.0.2.2:8000/api/v1' : 'http://localhost:8000/api/v1';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,

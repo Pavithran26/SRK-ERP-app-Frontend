@@ -7,18 +7,46 @@ import {
   TouchableOpacity, 
   KeyboardAvoidingView, 
   Platform,
-  StatusBar
+  StatusBar,
+  ActivityIndicator,
+  Alert
 } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+import apiClient from '../api/client';
 
 export default function LoginScreen({ onLogin }: { onLogin?: () => void }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    // TODO: Implement actual authentication via Django API
-    console.log('Login pressed', username);
-    if (onLogin) {
-      onLogin();
+  const handleLogin = async () => {
+    if (!username || !password) {
+      Alert.alert('Error', 'Please enter both username and password');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await apiClient.post('/auth/token', {
+        username,
+        password,
+      });
+
+      if (response.data && response.data.access) {
+        await SecureStore.setItemAsync('auth_token', response.data.access);
+        await SecureStore.setItemAsync('refresh_token', response.data.refresh || '');
+        if (onLogin) {
+          onLogin();
+        }
+      }
+    } catch (error: any) {
+      console.error('Login failed', error.response?.data || error.message);
+      Alert.alert(
+        'Login Failed', 
+        error.response?.data?.detail || 'Invalid credentials or server error.'
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,8 +95,17 @@ export default function LoginScreen({ onLogin }: { onLogin?: () => void }) {
         </TouchableOpacity>
 
         {/* Login Button */}
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin} activeOpacity={0.8}>
-          <Text style={styles.loginButtonText}>Sign In</Text>
+        <TouchableOpacity 
+          style={[styles.loginButton, loading && { opacity: 0.7 }]} 
+          onPress={handleLogin} 
+          activeOpacity={0.8}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#0F172A" />
+          ) : (
+            <Text style={styles.loginButtonText}>Sign In</Text>
+          )}
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
