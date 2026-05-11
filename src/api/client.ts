@@ -2,8 +2,8 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
 
-// Use the PC's actual local IP address for physical device testing.
-const API_BASE_URL = 'http://192.168.165.150:8000/api/v1';
+// Production API URL
+const API_BASE_URL = 'https://source-backend-django.vercel.app/api/v1';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
