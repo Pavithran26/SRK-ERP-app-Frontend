@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import DrawerNavigator from './DrawerNavigator';
+import AddEmployeeScreen from '../screens/AddEmployeeScreen';
+import CreateGrnScreen from '../screens/CreateGrnScreen';
+import AddVehicleScreen from '../screens/AddVehicleScreen';
+import AddSaleScreen from '../screens/AddSaleScreen';
+import AddLandScreen from '../screens/AddLandScreen';
+import AddWorklogScreen from '../screens/AddWorklogScreen';
+import AddStoreScreen from '../screens/AddStoreScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,9 +29,81 @@ export default function AppNavigator() {
           {(props) => <LoginScreen {...props} onLogin={handleLogin} />}
         </Stack.Screen>
       ) : (
-        <Stack.Screen name="MainApp">
-          {(props) => <DrawerNavigator {...props} onLogout={handleLogout} />}
-        </Stack.Screen>
+        <>
+          <Stack.Screen name="MainApp">
+            {(props) => <DrawerNavigator {...props} onLogout={handleLogout} />}
+          </Stack.Screen>
+          <Stack.Screen 
+            name="AddEmployee" 
+            component={AddEmployeeScreen} 
+            options={{ 
+              headerShown: true, 
+              title: 'Add Employee',
+              headerStyle: { backgroundColor: '#0F172A' },
+              headerTintColor: '#F8FAFC',
+            }}
+          />
+          <Stack.Screen 
+            name="CreateGrn" 
+            component={CreateGrnScreen} 
+            options={{ 
+              headerShown: true, 
+              title: 'Create GRN',
+              headerStyle: { backgroundColor: '#0F172A' },
+              headerTintColor: '#F8FAFC',
+            }}
+          />
+          <Stack.Screen 
+            name="AddVehicle" 
+            component={AddVehicleScreen} 
+            options={{ 
+              headerShown: true, 
+              title: 'Add Vehicle',
+              headerStyle: { backgroundColor: '#0F172A' },
+              headerTintColor: '#F8FAFC',
+            }}
+          />
+          <Stack.Screen 
+            name="AddSale" 
+            component={AddSaleScreen} 
+            options={{ 
+              headerShown: true, 
+              title: 'Record Sale',
+              headerStyle: { backgroundColor: '#0F172A' },
+              headerTintColor: '#F8FAFC',
+            }}
+          />
+          <Stack.Screen 
+            name="AddLand" 
+            component={AddLandScreen} 
+            options={{ 
+              headerShown: true, 
+              title: 'Register Land',
+              headerStyle: { backgroundColor: '#0F172A' },
+              headerTintColor: '#F8FAFC',
+            }}
+          />
+          <Stack.Screen 
+            name="AddWorklog" 
+            component={AddWorklogScreen} 
+            options={{ 
+              headerShown: true, 
+              title: 'Record Work Log',
+              headerStyle: { backgroundColor: '#0F172A' },
+              headerTintColor: '#F8FAFC',
+            }}
+          />
+          <Stack.Screen 
+            name="AddStore" 
+            component={AddStoreScreen} 
+            options={{ 
+              headerShown: true, 
+              title: 'Add Store Hub',
+              headerStyle: { backgroundColor: '#0F172A' },
+              headerTintColor: '#F8FAFC',
+            }}
+          />
+        </>
       )}
     </Stack.Navigator>
   );
