@@ -4,12 +4,12 @@ import { getAuth } from "firebase/auth";
 
 // These should be in your .env or app.json constants
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyAZ_9b6SsfGhxpRPF2BIpj5j9E4AxTELf0",
+  authDomain: "erp-pavithran26.firebaseapp.com",
+  projectId: "erp-pavithran26",
+  storageBucket: "erp-pavithran26.firebasestorage.app",
+  messagingSenderId: "788720012163",
+  appId: "1:788720012163:web:cb70c7a8ccdec0f021c4b6",
 };
 
 // Initialize Firebase with Offline Persistence enabled

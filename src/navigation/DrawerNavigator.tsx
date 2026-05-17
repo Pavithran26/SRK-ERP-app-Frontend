@@ -13,7 +13,12 @@ import GrnsScreen from '../screens/GrnsScreen';
 
 const Drawer = createDrawerNavigator();
 
-export default function DrawerNavigator() {
+type DrawerNavigatorProps = {
+  onLogout?: () => void;
+  [key: string]: any;
+};
+
+export default function DrawerNavigator({ onLogout, ...props }: DrawerNavigatorProps) {
   return (
     <Drawer.Navigator
       screenOptions={{
