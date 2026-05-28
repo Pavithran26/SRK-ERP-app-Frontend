@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 // These should be in your .env or app.json constants
@@ -12,12 +12,12 @@ const firebaseConfig = {
   appId: "1:788720012163:web:cb70c7a8ccdec0f021c4b6",
 };
 
-// Initialize Firebase with Offline Persistence enabled
+// Initialize Firebase
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
-const db = initializeFirestore(app, {
-  localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
-});
+// NOTE: persistentLocalCache / persistentMultipleTabManager are web-only APIs.
+// On React Native, Firestore uses in-memory cache by default.
+const db = getFirestore(app);
 
 const auth = getAuth(app);
 

@@ -2,6 +2,6 @@ module.exports = function(api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],
-    plugins: ['react-native-reanimated/plugin'],
+    // reanimated v4 plugin is handled automatically by babel-preset-expo
   };
 };

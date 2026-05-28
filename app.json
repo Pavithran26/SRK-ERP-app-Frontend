@@ -18,6 +18,7 @@
     },
     "android": {
       "package": "com.srk.erp",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#0F172A"
@@ -27,6 +28,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "57458bc3-d147-4a51-bd2f-4337418a0303"
+      }
     }
   }
 }

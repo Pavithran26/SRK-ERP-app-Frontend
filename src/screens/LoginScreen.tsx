@@ -11,8 +11,7 @@ import {
   ActivityIndicator,
   Alert
 } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
-import apiClient from '../api/client';
+import apiClient, { storage } from '../api/client';
 
 export default function LoginScreen({ onLogin }: { onLogin?: () => void }) {
   const [username, setUsername] = useState('');
@@ -33,8 +32,8 @@ export default function LoginScreen({ onLogin }: { onLogin?: () => void }) {
       });
 
       if (response.data && response.data.access) {
-        await SecureStore.setItemAsync('auth_token', response.data.access);
-        await SecureStore.setItemAsync('refresh_token', response.data.refresh || '');
+        await storage.setItem('auth_token', response.data.access);
+        await storage.setItem('refresh_token', response.data.refresh || '');
         if (onLogin) {
           onLogin();
         }
