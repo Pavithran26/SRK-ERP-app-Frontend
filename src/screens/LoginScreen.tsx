@@ -11,7 +11,9 @@ import {
   ActivityIndicator,
   Alert
 } from 'react-native';
-import apiClient, { storage } from '../api/client';
+import { storage } from '../api/client';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 export default function LoginScreen({ onLogin }: { onLogin?: () => void }) {
   const [username, setUsername] = useState('');
@@ -26,24 +28,28 @@ export default function LoginScreen({ onLogin }: { onLogin?: () => void }) {
 
     setLoading(true);
     try {
-      const response = await apiClient.post('/auth/token', {
-        username,
-        password,
-      });
+      // Authenticate with Firebase
+      const userCredential = await signInWithEmailAndPassword(auth, username, password);
+      
+      // Get the Firebase ID token
+      const token = await userCredential.user.getIdToken();
 
-      if (response.data && response.data.access) {
-        await storage.setItem('auth_token', response.data.access);
-        await storage.setItem('refresh_token', response.data.refresh || '');
-        if (onLogin) {
-          onLogin();
-        }
+      // Save token securely
+      await storage.setItem('auth_token', token);
+      
+      if (onLogin) {
+        onLogin();
       }
     } catch (error: any) {
-      console.error('Login failed', error.response?.data || error.message);
-      Alert.alert(
-        'Login Failed', 
-        error.response?.data?.detail || 'Invalid credentials or server error.'
-      );
+      console.error('Login failed', error);
+
+      // Handle common Firebase Auth errors
+      let errorMessage = 'Invalid credentials or server error.';
+      if (error.code === 'auth/invalid-email') errorMessage = 'Invalid email address format.';
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') errorMessage = 'Incorrect email or password.';
+      if (error.code === 'auth/too-many-requests') errorMessage = 'Too many attempts. Please try again later.';
+
+      Alert.alert('Login Failed', errorMessage);
     } finally {
       setLoading(false);
     }

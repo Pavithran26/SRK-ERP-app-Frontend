@@ -18,7 +18,7 @@ export const storage = {
 };
 
 // Production API URL
-const API_BASE_URL = 'https://source-backend-django.vercel.app/api/v1';
+const API_BASE_URL = 'https://srk-erp-app-backend.vercel.app/api/v1';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
